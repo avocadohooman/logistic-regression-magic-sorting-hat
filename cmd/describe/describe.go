@@ -2,13 +2,12 @@ package main
 
 import (
 	"fmt"
+	csv "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/csv"
+	errors "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/errors"
 	"log"
 	"os"
 	"strings"
-	errors "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/errors"
-	csv "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/csv"
 )
-
 
 func main() {
 	args := os.Args

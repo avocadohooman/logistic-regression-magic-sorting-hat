@@ -10,11 +10,11 @@ import (
 type Csv struct {
 	headers []string
 	// columnar
-	data [][]string
+	data    [][]string
 	columns [][]string
 }
 
-func (c *Csv) GetColumns(index int) ([]string, error){
+func (c *Csv) GetColumns(index int) ([]string, error) {
 	if index > len(c.headers) {
 		return nil, errors.New("Invalid header index")
 	}
@@ -34,7 +34,7 @@ func ParseCsv(csv_file *os.File) *Csv {
 	data := make([][]string, 0)
 	columns := make([][]string, len(headers))
 
-	for row, err := csv_reader.Read(); err == nil; row, err = csv_reader.Read(){
+	for row, err := csv_reader.Read(); err == nil; row, err = csv_reader.Read() {
 		data = append(data, row)
 
 		columnIndex := 0
@@ -53,8 +53,7 @@ func ParseCsv(csv_file *os.File) *Csv {
 
 	return &Csv{
 		headers: headers,
-		data: data,
+		data:    data,
 		columns: columns,
 	}
 }
-
