@@ -13,9 +13,13 @@ func ToFloat64(columns []string) ([]float64, error) {
 	newColumns := make(Columns, len(columns))
 
 	for i, value := range columns {
-		if parsed, err := strconv.ParseFloat(value, 64); err != nil {
-			return nil, errors.New(fmt.Sprintf("Cannot parse %v to float64", value))
+		if value == "" {
+			newColumns[i] = float64(0.00)
 		} else {
+			parsed, err := strconv.ParseFloat(value, 64)
+			if err != nil {
+			return nil, errors.New(fmt.Sprintf("Cannot parse %v to float64", value))
+		}
 			newColumns[i] = parsed
 		}
 	}
@@ -36,7 +40,14 @@ func Mean(columns Columns) float64 {
 	return (total / float64(Count(columns)))
 }
 
-func Std() {}
+func Std(columns Columns) float64 {
+	mean := Mean(columns)
+	var sum float64
+	for _, value := range columns {
+		sum =+ (value - mean) * (value - mean)
+	}
+	return sum / (float64)(len(columns) - 1)
+}
 
 func Min() {}
 
@@ -44,6 +55,7 @@ func Max() {}
 
 func TopPercentage() {}
 
+// Need generics
 func CardinalityFloat64(column Columns) int {
 	set := make(map[float64]int)
 

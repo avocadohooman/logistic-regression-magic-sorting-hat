@@ -30,10 +30,11 @@ func main() {
 	errors.DieIfErr(err)
 
 	csv := csv.ParseCsv(csv_file)
-	column, err := csv.GetColumns(3)
+	column, err := csv.GetColumns(8)
 	errors.DieIfErr(err)
 
 	parsedColumn, err := math.ToFloat64(column)
 	errors.DieIfErr(err)
-	fmt.Printf("count: %v", math.Count(parsedColumn))
+	fmt.Printf("count: %v\n", math.Count(parsedColumn))
+	fmt.Printf("std: %v\n", math.Std(parsedColumn))
 }
