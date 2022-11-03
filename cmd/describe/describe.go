@@ -17,16 +17,19 @@ type Stats struct {
 	Std float64
 }
 
+// consts
+var dateColumn = 4
+var skipColumns = []int{0, 1, 2, 3, 5}
+// var handColumn := 3
+
 
 func main() {
 	args := os.Args
-	dateColumn := 4
-	// handColumn := 3
-	skipColumns := []int{0, 1, 2, 3, 5}
 
 	if len(args) < 2 {
 		log.Fatal("File path required")
 	}
+
 	filep := args[1]
 	csv, err := csv.ParseCsv(filep)
 	errors.DieIfErr(err)
@@ -45,7 +48,7 @@ func main() {
 			errors.DieIfErr(err)
 		}
 
-		parseColumn, err := math.ToFloat64(column)
+		parseColumn, err := utils.ToFloat64(column)
 
 		stat := Stats{
 			FeatureName: csv.GetHeader(i),
