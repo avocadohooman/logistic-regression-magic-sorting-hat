@@ -1,77 +1,42 @@
 package math
 
 import (
-	"errors"
-	"strconv"
-
-	"fmt"
+	utils "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/utils"
 )
 
-type Columns []float64
-
-func ToFloat64(columns []string) ([]float64, error) {
-	newColumns := make(Columns, len(columns))
-
-	for i, value := range columns {
-		if value == "" {
-			newColumns[i] = float64(0.00)
-		} else {
-			parsed, err := strconv.ParseFloat(value, 64)
-			if err != nil {
-			return nil, errors.New(fmt.Sprintf("Cannot parse %v to float64", value))
-		}
-			newColumns[i] = parsed
-		}
-	}
-	return newColumns, nil
-}
-
-func Count(columns Columns) int {
+func Count(columns utils.Columns) int {
 	return len(columns)
 }
 
-func Mean(columns Columns) float64 {
-	var total float64
+func Mean(columns utils.Columns) float64 {
+	var retVal float64
 
 	for _, value := range columns {
-		total=+value
+		retVal = +value
 	}
+	retVal = (retVal / float64(Count(columns)))
 
-	return (total / float64(Count(columns)))
+	return retVal
 }
 
-func Std(columns Columns) float64 {
+func Std(columns utils.Columns) float64 {
+	var retVal float64
+
 	mean := Mean(columns)
-	var sum float64
 	for _, value := range columns {
-		sum =+ (value - mean) * (value - mean)
+		retVal = +(value - mean) * (value - mean)
 	}
-	return sum / (float64)(len(columns) - 1)
+	retVal = retVal / (float64)(len(columns)-1)
+
+	return retVal
 }
 
 func Min() {}
 
 func Max() {}
 
-func TopPercentage() {}
+func Medium() {}
 
-// Need generics
-func CardinalityFloat64(column Columns) int {
-	set := make(map[float64]int)
-
-	for _, value := range column {
-		set[value] = 1
-	}
-
-	return len(set)
-}
-
-func CardinalityString(column []string) int {
-	set := make(map[string]int)
-
-	for _, value := range column {
-		set[value] = 1
-	}
-
-	return len(set)
+func Percentile(percentile int) float64 {
+	return 0.00
 }

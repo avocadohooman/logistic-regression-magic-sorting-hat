@@ -12,16 +12,16 @@ import (
 
 type Stats struct {
 	FeatureName string
-	Count int
-	Mean float64
-	Std float64
+	Count       int
+	Mean        float64
+	Std         float64
 }
 
 // consts
 var dateColumn = 4
 var skipColumns = []int{0, 1, 2, 3, 5}
-// var handColumn := 3
 
+// var handColumn := 3
 
 func main() {
 	args := os.Args
@@ -52,9 +52,9 @@ func main() {
 
 		stat := Stats{
 			FeatureName: csv.GetHeader(i),
-			Count: math.Count(parseColumn),
-			Mean: math.Mean(parseColumn),
-			Std: math.Std(parseColumn),
+			Count:       math.Count(parseColumn),
+			Mean:        math.Mean(parseColumn),
+			Std:         math.Std(parseColumn),
 		}
 		stats = append(stats, stat)
 	}
