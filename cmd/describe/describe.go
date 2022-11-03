@@ -7,34 +7,53 @@ import (
 	math "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/math"
 	"log"
 	"os"
-	"strings"
 )
 
 type Stats struct {
-	Count float64
+	FeatureName string
+	Count int
+	Mean float64
+	Std float64
 }
 
 
 func main() {
 	args := os.Args
+	dateColumn := 4
+	// handColumn := 3
+	skipColumns := []int{0, 1, 2, 3, 5}
 
 	if len(args) < 2 {
 		log.Fatal("File path required")
 	}
 	filep := args[1]
-	if strings.HasSuffix(filep, ".csv") == false {
-		log.Fatal("File must be an csv")
+	csv, err := csv.ParseCsv(filep)
+	errors.DieIfErr(err)
+
+	var stats []Stats
+	for i := 0; i < csv.GetHeaderCount(); i++ {
+		if math.Contains(skipColumns, i) {
+			continue
+		}
+
+		column, err := csv.GetColumns(i)
+		errors.DieIfErr(err)
+
+		if i == dateColumn {
+			column, err = math.ParseDate(column)
+			errors.DieIfErr(err)
+		}
+
+		parseColumn, err := math.ToFloat64(column)
+
+		stat := Stats{
+			FeatureName: csv.GetHeader(i),
+			Count: math.Count(parseColumn),
+			Mean: math.Mean(parseColumn),
+			Std: math.Std(parseColumn),
+		}
+		stats = append(stats, stat)
 	}
 
-	csv_file, err := os.Open(filep)
-	errors.DieIfErr(err)
-
-	csv := csv.ParseCsv(csv_file)
-	column, err := csv.GetColumns(8)
-	errors.DieIfErr(err)
-
-	parsedColumn, err := math.ToFloat64(column)
-	errors.DieIfErr(err)
-	fmt.Printf("count: %v\n", math.Count(parsedColumn))
-	fmt.Printf("std: %v\n", math.Std(parsedColumn))
+	fmt.Println(stats)
 }
