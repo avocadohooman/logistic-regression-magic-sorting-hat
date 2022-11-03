@@ -5,6 +5,7 @@ import (
 	csv "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/csv"
 	errors "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/errors"
 	math "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/math"
+	utils "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/utils"
 	"log"
 	"os"
 )
@@ -32,7 +33,7 @@ func main() {
 
 	var stats []Stats
 	for i := 0; i < csv.GetHeaderCount(); i++ {
-		if math.Contains(skipColumns, i) {
+		if utils.Contains(skipColumns, i) {
 			continue
 		}
 
@@ -40,7 +41,7 @@ func main() {
 		errors.DieIfErr(err)
 
 		if i == dateColumn {
-			column, err = math.ParseDate(column)
+			column, err = utils.ParseDate(column)
 			errors.DieIfErr(err)
 		}
 
