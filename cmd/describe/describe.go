@@ -4,10 +4,16 @@ import (
 	"fmt"
 	csv "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/csv"
 	errors "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/errors"
+	math "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/math"
 	"log"
 	"os"
 	"strings"
 )
+
+type Stats struct {
+	Count float64
+}
+
 
 func main() {
 	args := os.Args
@@ -24,5 +30,10 @@ func main() {
 	errors.DieIfErr(err)
 
 	csv := csv.ParseCsv(csv_file)
-	fmt.Println(csv.GetColumns(1))
+	column, err := csv.GetColumns(3)
+	errors.DieIfErr(err)
+
+	parsedColumn, err := math.ToFloat64(column)
+	errors.DieIfErr(err)
+	fmt.Printf("count: %v", math.Count(parsedColumn))
 }
