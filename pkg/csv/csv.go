@@ -52,6 +52,8 @@ func openCsv(path string) (*os.File, error) {
 
 func ParseCsv(path string) (*Csv, error) {
 	csv_file, err := openCsv(path)
+	defer csv_file.Close()
+
 	if err != nil {
 		return nil, err
 	}
