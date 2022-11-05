@@ -52,7 +52,7 @@ func main() {
 		fifty, err := math.Percentile(parseColumn, 50)
 		errors.DieIfErr(err)
 
-		secentyFive, err := math.Percentile(parseColumn, 75)
+		seventyFive, err := math.Percentile(parseColumn, 75)
 		errors.DieIfErr(err)
 
 		stat := models.Stats{
@@ -64,7 +64,7 @@ func main() {
 			Max:         math.Max(parseColumn),
 			TwentyFive:  twentyFive,
 			Fifty:       fifty,
-			SeventyFive: secentyFive,
+			SeventyFive: seventyFive,
 		}
 		stats = append(stats, stat)
 	}
