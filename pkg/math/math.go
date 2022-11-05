@@ -2,6 +2,7 @@ package math
 
 import (
 	utils "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/utils"
+	"math"
 )
 
 func Count(columns utils.Columns) int {
@@ -24,9 +25,10 @@ func Std(columns utils.Columns) float64 {
 
 	mean := Mean(columns)
 	for _, value := range columns {
-		retVal = +(value - mean) * (value - mean)
+		retVal =+ (value - mean) * (value - mean)
 	}
 	retVal = retVal / (float64)(len(columns)-1)
+	retVal = math.Sqrt(retVal)
 
 	return retVal
 }
