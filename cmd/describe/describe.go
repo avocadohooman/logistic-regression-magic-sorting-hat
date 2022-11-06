@@ -27,7 +27,7 @@ func ToFloat64(column []string) ([]float64, error) {
 
 	for i, value := range column {
 		if value == "" {
-			newColumns[i] = math.NaN()
+			continue
 		} else {
 			parsed, err := strconv.ParseFloat(value, 64)
 			if err != nil {
@@ -40,7 +40,6 @@ func ToFloat64(column []string) ([]float64, error) {
 		if math.IsNaN(value) {
 			value = mathService.Min(newColumns)
 		}
-		fmt.Println("FLOAT 64", value)
 	}
 	return newColumns, nil
 }
