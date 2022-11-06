@@ -2,28 +2,9 @@ package utils
 
 import (
 	"errors"
-	"fmt"
-	"strconv"
+
+	"github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/models/stats"
 )
-
-type Column []float64
-
-func ToFloat64(column []string) ([]float64, error) {
-	newColumns := make(Column, len(column))
-
-	for i, value := range column {
-		if value == "" {
-			newColumns[i] = float64(0.00)
-		} else {
-			parsed, err := strconv.ParseFloat(value, 64)
-			if err != nil {
-				return nil, errors.New(fmt.Sprintf("Cannot parse %v to float64", value))
-			}
-			newColumns[i] = parsed
-		}
-	}
-	return newColumns, nil
-}
 
 func ParseDate(column []string) ([]string, error) {
 	parsedColumn := make([]string, len(column))
@@ -48,7 +29,7 @@ func Contains(elements []int, needle int) bool {
 }
 
 // Need generics :(
-func CardinalityFloat64(column Column) int {
+func CardinalityFloat64(column stats.Column) int {
 	set := make(map[float64]int)
 
 	for _, value := range column {

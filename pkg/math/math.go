@@ -2,21 +2,26 @@ package math
 
 import (
 	"errors"
+	"fmt"
 	"math"
 	"sort"
 
-	utils "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/utils"
+	"github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/models/stats"
 )
 
-func Count(columns utils.Column) int {
+func Count(columns stats.Column) int {
 	return len(columns)
 }
 
-func Mean(column utils.Column) float64 {
+func Mean(column stats.Column) float64 {
 	var retVal float64
-
+	fmt.Println("MEAN COLUMNS", column)
+	
 	for _, value := range column {
 		retVal += value
+		// if math.IsNaN(value) {
+		// 	fmt.Println("COLUMN VALUE", value)
+		// }
 	}
 
 	retVal = (retVal / float64(Count(column)))
@@ -24,7 +29,7 @@ func Mean(column utils.Column) float64 {
 	return retVal
 }
 
-func Std(columns utils.Column) float64 {
+func Std(columns stats.Column) float64 {
 	var retVal float64
 
 	mean := Mean(columns)

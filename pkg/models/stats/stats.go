@@ -13,3 +13,5 @@ type Stats struct {
 }
 
 type StatsArray []Stats
+
+type Column []float64

@@ -1,12 +1,16 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"math"
 	"os"
+	"strconv"
 
 	csvService "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/csv"
 	errors "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/errors"
-	math "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/math"
+	mathService "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/math"
+	"github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/models/stats"
 	models "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/models/stats"
 	"github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/print-data"
 	utils "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/utils"
@@ -17,6 +21,29 @@ var dateColumn = 4
 var skipColumns = []int{0, 1, 2, 3, 5}
 
 // var handColumn := 3
+
+func ToFloat64(column []string) ([]float64, error) {
+	newColumns := make(stats.Column, len(column))
+
+	for i, value := range column {
+		if value == "" {
+			newColumns[i] = math.NaN()
+		} else {
+			parsed, err := strconv.ParseFloat(value, 64)
+			if err != nil {
+				return nil, errors.New(fmt.Sprintf("Cannot parse %v to float64", value))
+			}
+			newColumns[i] = parsed
+		}
+	}
+	for _, value := range newColumns {
+		if math.IsNaN(value) {
+			value = mathService.Min(newColumns)
+		}
+		fmt.Println("FLOAT 64", value)
+	}
+	return newColumns, nil
+}
 
 func main() {
 	args := os.Args
@@ -43,25 +70,25 @@ func main() {
 			errors.DieIfErr(err)
 		}
 
-		parseColumn, err := utils.ToFloat64(column)
+		parseColumn, err := ToFloat64(column)
 		errors.DieIfErr(err)
 
-		twentyFive, err := math.Percentile(parseColumn, 25)
+		twentyFive, err := mathService.Percentile(parseColumn, 25)
 		errors.DieIfErr(err)
 
-		fifty, err := math.Percentile(parseColumn, 50)
+		fifty, err := mathService.Percentile(parseColumn, 50)
 		errors.DieIfErr(err)
 
-		seventyFive, err := math.Percentile(parseColumn, 75)
+		seventyFive, err := mathService.Percentile(parseColumn, 75)
 		errors.DieIfErr(err)
 
 		stat := models.Stats{
 			FeatureName: csv.GetHeader(i),
-			Count:       math.Count(parseColumn),
-			Mean:        math.Mean(parseColumn),
-			Std:         math.Std(parseColumn),
-			Min:         math.Min(parseColumn),
-			Max:         math.Max(parseColumn),
+			Count:       mathService.Count(parseColumn),
+			Mean:        mathService.Mean(parseColumn),
+			Std:         mathService.Std(parseColumn),
+			Min:         mathService.Min(parseColumn),
+			Max:         mathService.Max(parseColumn),
 			TwentyFive:  twentyFive,
 			Fifty:       fifty,
 			SeventyFive: seventyFive,
