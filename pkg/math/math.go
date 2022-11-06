@@ -29,10 +29,10 @@ func Std(columns utils.Column) float64 {
 
 	mean := Mean(columns)
 	for _, value := range columns {
-	retVal += (value - mean) * (value - mean)
-	retVal = retVal / (float64)(len(columns)-1)
+		retVal += (value - mean) * (value - mean)
 	}
 
+	retVal = retVal / (float64)(len(columns)-1)
 	retVal = math.Sqrt(retVal)
 
 	return retVal
