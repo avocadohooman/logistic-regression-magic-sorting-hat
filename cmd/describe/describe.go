@@ -1,12 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
-	"reflect"
 
 	csvService "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/csv"
+	"github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/describe"
 	errors "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/errors"
 	math "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/math"
 	models "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/models/stats"
@@ -69,17 +68,5 @@ func main() {
 		}
 		stats = append(stats, stat)
 	}
-	fmt.Println(stats)
-	fmt.Println(csvService.CreateCSV(stats))
-	for _, stat := range stats {
-		v := reflect.ValueOf(stat)
-
-		values := make([]interface{}, v.NumField())
-	
-		for i := 0; i < v.NumField(); i++ {
-			values[i] = v.Field(i).Interface()
-		}
-	
-		fmt.Println(values)
-	}
+	describe.PrintData(stats)
 }

@@ -39,11 +39,11 @@ func Std(columns utils.Column) float64 {
 }
 
 func Min(values []float64) float64 {
-	minValue := values[0]
-
 	if len(values) == 0 {
 		return math.NaN()
 	}
+
+	minValue := values[0]
 
 	if len(values) == 1 {
 		return minValue
@@ -58,11 +58,11 @@ func Min(values []float64) float64 {
 }
 
 func Max(values []float64) float64 {
-	maxValue := values[0]
-
 	if len(values) == 0 {
 		return math.NaN()
 	}
+
+	maxValue := values[0]
 	
 	if len(values) == 1 {
 		return maxValue
@@ -75,8 +75,6 @@ func Max(values []float64) float64 {
 	}
 	return float64(maxValue)
 }
-
-func Medium() {}
 
 func Percentile(input []float64, percentile float64) (float64, error) {
 	if len(input) == 0 {
