@@ -2,20 +2,15 @@ package main
 
 import (
 	"fmt"
-	csv "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/csv"
-	errors "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/errors"
-	math "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/math"
-	utils "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/utils"
 	"log"
 	"os"
-)
 
-type Stats struct {
-	FeatureName string
-	Count       int
-	Mean        float64
-	Std         float64
-}
+	csvService "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/csv"
+	errors "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/errors"
+	math "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/math"
+	models "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/models/stats"
+	utils "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/utils"
+)
 
 // consts
 var dateColumn = 4
@@ -31,10 +26,10 @@ func main() {
 	}
 
 	filep := args[1]
-	csv, err := csv.ParseCsv(filep)
+	csv, err := csvService.ParseCsv(filep)
 	errors.DieIfErr(err)
 
-	var stats []Stats
+	stats := models.StatsArray{}
 	for i := 0; i < csv.GetHeaderCount(); i++ {
 		if utils.Contains(skipColumns, i) {
 			continue
@@ -49,15 +44,31 @@ func main() {
 		}
 
 		parseColumn, err := utils.ToFloat64(column)
+		errors.DieIfErr(err)
 
-		stat := Stats{
+		twentyFive, err := math.Percentile(parseColumn, 25)
+		errors.DieIfErr(err)
+
+		fifty, err := math.Percentile(parseColumn, 50)
+		errors.DieIfErr(err)
+
+		seventyFive, err := math.Percentile(parseColumn, 75)
+		errors.DieIfErr(err)
+
+		stat := models.Stats{
 			FeatureName: csv.GetHeader(i),
 			Count:       math.Count(parseColumn),
 			Mean:        math.Mean(parseColumn),
 			Std:         math.Std(parseColumn),
+			Min:         math.Min(parseColumn),
+			Max:         math.Max(parseColumn),
+			TwentyFive:  twentyFive,
+			Fifty:       fifty,
+			SeventyFive: seventyFive,
 		}
 		stats = append(stats, stat)
 	}
 
 	fmt.Println(stats)
+	fmt.Println(csvService.CreateCSV(stats))
 }
