@@ -6,12 +6,12 @@ import (
 	"strconv"
 )
 
-type Columns []float64
+type Column []float64
 
-func ToFloat64(columns []string) ([]float64, error) {
-	newColumns := make(Columns, len(columns))
+func ToFloat64(column []string) ([]float64, error) {
+	newColumns := make(Column, len(column))
 
-	for i, value := range columns {
+	for i, value := range column {
 		if value == "" {
 			newColumns[i] = float64(0.00)
 		} else {
@@ -48,7 +48,7 @@ func Contains(elements []int, needle int) bool {
 }
 
 // Need generics :(
-func CardinalityFloat64(column Columns) int {
+func CardinalityFloat64(column Column) int {
 	set := make(map[float64]int)
 
 	for _, value := range column {

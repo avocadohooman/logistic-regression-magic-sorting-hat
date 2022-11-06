@@ -1,31 +1,34 @@
 package math
 
 import (
-	utils "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/utils"
+	"fmt"
 	"math"
+
+	utils "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/utils"
 )
 
-func Count(columns utils.Columns) int {
+func Count(columns utils.Column) int {
 	return len(columns)
 }
 
-func Mean(columns utils.Columns) float64 {
+func Mean(column utils.Column) float64 {
 	var retVal float64
 
-	for _, value := range columns {
-		retVal = +value
+	for _, value := range column {
+		retVal += value
 	}
-	retVal = (retVal / float64(Count(columns)))
+
+	retVal = (retVal / float64(Count(column)))
 
 	return retVal
 }
 
-func Std(columns utils.Columns) float64 {
+func Std(columns utils.Column) float64 {
 	var retVal float64
 
 	mean := Mean(columns)
 	for _, value := range columns {
-		retVal =+ (value - mean) * (value - mean)
+		retVal += (value - mean) * (value - mean)
 	}
 	retVal = retVal / (float64)(len(columns)-1)
 	retVal = math.Sqrt(retVal)
