@@ -23,13 +23,13 @@ func PrintData(stats models.StatsArray) {
 	for _, stat := range stats {
 		headers = append(headers, strings.ToUpper(stat.FeatureName[0:3]))
 		count = append(count, fmt.Sprintf("%d", stat.Count))
-		mean = append(mean, fmt.Sprintf("%.4f", stat.Mean))
-		std = append(std, fmt.Sprintf("%.4f", stat.Std))
-		min = append(min, fmt.Sprintf("%.4f", stat.Min))
-		max = append(max, fmt.Sprintf("%.4f", stat.Max))
-		twentyFive = append(twentyFive, fmt.Sprintf("%.4f", stat.TwentyFive))
-		fifty = append(fifty, fmt.Sprintf("%.4f", stat.Fifty))
-		seventyFive = append(seventyFive, fmt.Sprintf("%.4f", stat.SeventyFive))
+		mean = append(mean, fmt.Sprintf("%.2f", stat.Mean))
+		std = append(std, fmt.Sprintf("%.2f", stat.Std))
+		min = append(min, fmt.Sprintf("%.2f", stat.Min))
+		max = append(max, fmt.Sprintf("%.2f", stat.Max))
+		twentyFive = append(twentyFive, fmt.Sprintf("%.2f", stat.TwentyFive))
+		fifty = append(fifty, fmt.Sprintf("%.2f", stat.Fifty))
+		seventyFive = append(seventyFive, fmt.Sprintf("%.2f", stat.SeventyFive))
 	}
 
 	tabFeatures := strings.Join(headers, "\t")
