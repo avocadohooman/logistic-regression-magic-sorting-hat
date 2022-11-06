@@ -44,7 +44,7 @@ func Min(values []float64) float64 {
 	}
 
 	minValue := values[0]
-
+	
 	if len(values) == 1 {
 		return minValue
 	}

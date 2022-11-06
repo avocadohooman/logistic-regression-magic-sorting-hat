@@ -5,7 +5,7 @@ import (
 	"os"
 
 	csvService "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/csv"
-	"github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/describe"
+	"github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/print-data"
 	errors "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/errors"
 	math "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/math"
 	models "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/models/stats"
@@ -68,5 +68,5 @@ func main() {
 		}
 		stats = append(stats, stat)
 	}
-	describe.PrintData(stats)
+	printdata.PrintData(stats)
 }
