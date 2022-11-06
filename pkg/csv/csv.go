@@ -1,14 +1,11 @@
 package csv
 
 import (
-	"bytes"
 	"encoding/csv"
-	"fmt"
 	"os"
 	"strings"
 
 	errors "github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/errors"
-	"github.com/avocadohooman/logistic-regression-magic-sorting-hat/pkg/models/stats"
 )
 
 type Csv struct {
@@ -89,38 +86,3 @@ func ParseCsv(path string) (*Csv, error) {
 	}, nil
 }
 
-func CreateCSV(describedStats stats.StatsArray) string {
-	b := new(bytes.Buffer)
-	writer := csv.NewWriter(b)
-
-	var headers []string
-	// headers  = append(headers, "")
-	for _, describedStat := range describedStats {
-		fmt.Println(describedStat.FeatureName)
-		headers = append(headers, describedStat.FeatureName)
-	}
-	writer.Write(headers)
-
-	// for i = 0; i < 8; i++ {
-	// 	for 
-	// 	var row []string
-	// 	row = populateRow(row, describedStat)
-	// 	err := writer.Write(row)
-	// 	errors.DieIfErr(err)
-	// }
-	writer.Flush()
-	return strings.Join(strings.Split(b.String(), "\n"), "\n")
-}
-
-func populateRow(row []string, describedStat stats.Stats) []string {
-	return append(row,
-		fmt.Sprintf("%d", describedStat.Count),
-		fmt.Sprintf("%.4f", describedStat.Mean),
-		fmt.Sprintf("%.4f", describedStat.Std),
-		fmt.Sprintf("%.4f", describedStat.Max),
-		fmt.Sprintf("%.4f", describedStat.Min),
-		fmt.Sprintf("%.4f", describedStat.TwentyFive),
-		fmt.Sprintf("%.4f", describedStat.Fifty),
-		fmt.Sprintf("%.4f", describedStat.SeventyFive),
-	)
-}
