@@ -2,7 +2,6 @@ package math
 
 import (
 	"errors"
-	"fmt"
 	"math"
 	"sort"
 
@@ -15,13 +14,9 @@ func Count(columns stats.Column) int {
 
 func Mean(column stats.Column) float64 {
 	var retVal float64
-	fmt.Println("MEAN COLUMNS", column)
-	
+
 	for _, value := range column {
 		retVal += value
-		// if math.IsNaN(value) {
-		// 	fmt.Println("COLUMN VALUE", value)
-		// }
 	}
 
 	retVal = (retVal / float64(Count(column)))
