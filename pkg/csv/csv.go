@@ -85,4 +85,3 @@ func ParseCsv(path string) (*Csv, error) {
 		columns: columns,
 	}, nil
 }
-

@@ -44,7 +44,7 @@ func PrintData(stats models.StatsArray) {
 
 	const padding = 2
 	tabWriter := tabwriter.NewWriter(os.Stdout, 0, 0, padding, ' ', tabwriter.Debug)
-	
+
 	fmt.Fprintln(tabWriter, tabFeatures)
 	fmt.Fprintln(tabWriter, tabCount)
 	fmt.Fprintln(tabWriter, tabMean)

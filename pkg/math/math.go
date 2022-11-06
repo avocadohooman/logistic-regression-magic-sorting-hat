@@ -44,12 +44,12 @@ func Min(values []float64) float64 {
 	}
 
 	minValue := values[0]
-	
+
 	if len(values) == 1 {
 		return minValue
 	}
 
-	for value := range values {
+	for _, value := range values {
 		if float64(value) < minValue {
 			minValue = float64(value)
 		}
@@ -63,12 +63,12 @@ func Max(values []float64) float64 {
 	}
 
 	maxValue := values[0]
-	
+
 	if len(values) == 1 {
 		return maxValue
 	}
 
-	for value := range values {
+	for _, value := range values {
 		if float64(value) > maxValue {
 			maxValue = float64(value)
 		}
